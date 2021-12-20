@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:second_app/pages/details.dart';
 
@@ -18,34 +19,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
           padding: const EdgeInsets.all(20),
-          child: ListView(
-            children: [
-                MyBox(
-                    "What is a computer?",
-                    "Computer is a things to calculate and for any other works.",
-                    "https://cdn.pixabay.com/photo/2021/12/13/17/29/branches-6868761_960_720.jpg"
-                    ),
-                SizedBox(height:20,),
-                MyBox(
-                    "What is Flutter?",
-                    "Flutter is a  tool to crate a mobile application.",
-                    "https://cdn.pixabay.com/photo/2016/12/11/12/02/mountains-1899264_960_720.jpg"
-                    ),
-                SizedBox(height:20,),
-                MyBox(
-                    "What is Dart?",
-                    "Dart is the language used in Flutter.",
-                    "https://cdn.pixabay.com/photo/2017/03/15/13/27/rough-horn-2146181_960_720.jpg"
-                ),
-                SizedBox(height:20,),
-            ],
-        ), 
+          child: FutureBuilder(
+            builder:(context,snapshot){
+              var data = json.decode(snapshot.data.toString());
+              return ListView.builder(itemBuilder: (BuildContext context, int index){
+                return MyBox(data[index]['title'],data[index]['subtitle'],data[index]['image_url']);
+              },
+              itemCount: data.length,);
+            },
+            future: DefaultAssetBundle.of(context).loadString('assets/data.json'),
+          ) 
       ),
     );
   }
 
   Widget MyBox(String title, String subtitle, String picture){
       return Container(
+          margin: EdgeInsets.only(top:20),
           padding: EdgeInsets.all(20),
           height:150,
           decoration:  BoxDecoration(
