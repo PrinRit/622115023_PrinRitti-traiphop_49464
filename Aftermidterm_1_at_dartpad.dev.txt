@@ -1,0 +1,14 @@
+import 'dart:convert';
+void main() {
+  String JsonString = '{"id": 1,"name": "Leanne Graham","company": {"name": "Romaguera-Crona","catchPhrase": "Multi-layered client-server neural-net","bs": "harness real-time e-markets"}}';
+  
+  Map mappedJson = jsonDecode(JsonString);
+  
+  //print("mappedJson = ${mappedJson}");
+  //print("mappedJson['id'] = ${mappedJson['id']}");
+  //print("mappedJson['company']['name'] = ${mappedJson['company']['name']}");
+  
+  String stringedJson = jsonEncode(mappedJson);
+  print(stringedJson);
+  print(stringedJson.length);
+}
